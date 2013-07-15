@@ -1,4 +1,4 @@
-define(['text!templates/firmsView.txt'],function (template) {
+define(['text!templates/firmsView.txt','views/clientsView'],function (template,clientsView) {
 
     var firmModel = Backbone.Model.extend({
 
@@ -17,13 +17,35 @@ define(['text!templates/firmsView.txt'],function (template) {
         },
 
         initialize: function () {
-             this.render();
+              this.setElement($("<div/>"));
+
+
+
         },
 
         render: function(){
-            //require(['views/clientsView'],function(){});
+//            //require(['views/clientsView'],function(){});
+              this.$el.html(_.template(template,{testdata:"2121",LV:this.loadSubView}));
 
-            _.template(template,{testdata:"2121",LV:this.loadSubView});
+              var cView = new clientsView({});
+
+
+
+//            this.$el.html();
+
+        },
+
+        serverRender: function(cB){
+
+
+            //cB(this.$el.html());
+            //callBack("lskdjf");
+
+//            if(true){
+                this.render();
+            cB(this.$el);
+//            }
+
 
         },
 
@@ -31,8 +53,7 @@ define(['text!templates/firmsView.txt'],function (template) {
 
             //document.write(requireView);
             //alert("lksdjf");
-            require([requireView],function(){
-            });
+            require([requireView]);
 
         }
 

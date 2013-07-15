@@ -4,16 +4,27 @@ var Handlebars = require('handlebars');
 var request = require('request');
 var fs = require('fs');
 var requirejs = require('requirejs');
-var Backbone = require('backbone');
+_ =  global._ = require('underscore');
+
+var jsdom = require('jsdom').jsdom
+
+var $ = global.jQuery = global.$ = require('jquery').create();
+var jQuery = $;
+
+global.Backbone = require('backbone');
+
 var app = express();
+
 
 var port = process.env.PORT || 1222;
 
 // Configure RequireJS
 requirejs.config({
-    baseUrl: __dirname,
+    baseUrl: __dirname + '/modules',
     nodeRequire: require
 });
+
+console.log(__dirname);
 
 var data = require('./data.js');
 //var preprocessor = require('./preprocessor.js');
@@ -46,6 +57,7 @@ app.configure(function(){
 //    return a.toFixed(2);
 //});
 
+
 //Handlebars.registerHelper('lv', function(module) {
 //
 //    var view = requirejs('public/' + module);
@@ -57,34 +69,35 @@ app.configure(function(){
 //    return new Handlebars.SafeString(template(data));
 //
 //});
-//
-//app.get('/', function(req, res) {
-//    preprocessor.start(map.precompiled, function(data) {
-//        res.render('page', data);
-//    });
-//});
-//
-//app.get('/catered', function(req, res) {
-//    preprocessor.start([['results','http://b4tnodetest.azurewebsites.net/data/all']], function(data) {
-//        res.render('page', data.results);
-//    });
-//});
-//
-//app.get('/precompiled', function(req, res) {
-//    preprocessor.start(map.precompiled.data('http://b4tnodetest.azurewebsites.net/data'), function(data) {
-//        res.render(map.precompiled.template, map.precompiled.process(data));
-//    });
-//});
 
 
+app.get('/*', function(req, res,next) {
+    //res.write("aadxxxxxxxxxvcvvvvvvvdbbbbbaaa");
+    //res.end();
+    res.contentType("text/html");
+    next();
+});
 
+app.get('/firms', function(req, res) {
 
-app.get('/', function(req, res) {
-    var t;
-    var tmpView = requirejs('/modules/firmsView')  ;
-    res.write(tmpView);
-    res.write("aadxxxxxxxxxvcvvvvvvvdbbbbbaaa");
+      var view = requirejs('views/firmsView');
+//    //res.json(Backbone);
+     var v = new view();
+     //v.render();
+
+    v.serverRender(function(html){
+
+        //html.append($("<h1>test passes</h1>"));
+
+        //html.append("<h3>second test passes</h3>");
+        res.send(html.html())
+            res.end();
+        });
+
     res.end();
+
+
+
 });
 
 
@@ -105,6 +118,8 @@ var numTimers = .4;
 //    });
 //
 //});
+
+
 
 app.get('/data/clients', function(req, res) {
 

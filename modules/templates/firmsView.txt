@@ -1,6 +1,7 @@
 FIRM
 
- <%LV('views/clientsView');%>
+<%=testdata%>
+ <% LV('views/clientsView'); %>
 
 
  VIEW

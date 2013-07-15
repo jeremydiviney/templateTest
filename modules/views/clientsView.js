@@ -1,6 +1,5 @@
 define(['text!templates/clientsView.txt'],function (template) {
 
-
     var clientModel = Backbone.Model.extend({
 
         defaults: {
@@ -22,6 +21,7 @@ define(['text!templates/clientsView.txt'],function (template) {
         },
 
         render: function(){
+            _.template(template,{testdata:"2121",LV:this.loadSubView});
 
         }
 
