@@ -77,8 +77,10 @@ app.configure(function(){
 //});
 
 
-app.get('/', function(req, res) {
 
+
+app.get('/', function(req, res) {
+    var t;
     var tmpView = requirejs('/modules/firmsView')  ;
     res.write(tmpView);
     res.write("aadxxxxxxxxxvcvvvvvvvdbbbbbaaa");
