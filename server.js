@@ -4,7 +4,7 @@ var Handlebars = require('handlebars');
 var request = require('request');
 var fs = require('fs');
 var requirejs = require('requirejs');
-_ =  global._ = require('underscore');
+var _ =  global._ = require('lodash');
 
 var jsdom = require('jsdom').jsdom
 
