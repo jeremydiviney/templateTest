@@ -23,6 +23,7 @@ define(['text!templates/firmsView.txt','views/clientsView'],function (template,c
 
         },
 
+
         render: function(){
 //            //require(['views/clientsView'],function(){});
             this.setElement($(_.template(template,{models:this.collection.models})));
