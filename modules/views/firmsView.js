@@ -1,14 +1,7 @@
 define(['text!templates/firmsView.txt','views/clientsView'],function (template,clientsView) {
 
-    var firmModel = Backbone.Model.extend({
-
-        defaults: {
-
-        }
-
-    });
-
     // View
+    var firmsCollection = require('collections/firmsCollection');
 
     var view = Backbone.View.extend({
 
@@ -17,35 +10,44 @@ define(['text!templates/firmsView.txt','views/clientsView'],function (template,c
         },
 
         initialize: function () {
-              this.setElement($("<div/>"));
+              var that = this;
+              this.setElement($("<table/>"));
+              this.collection = new firmsCollection();
 
+              this.listenTo(this.collection,'sync',this.dataReady);
 
+              this.collection.fetch({
+                  success:function(collection,response,options){console.log(response);},
+                  error: function(collection,response,options){console.log(response)}
+              });
 
         },
 
         render: function(){
 //            //require(['views/clientsView'],function(){});
-              this.$el.html(_.template(template,{testdata:"2121",LV:this.loadSubView}));
+            this.setElement($(_.template(template,{models:this.collection.models})));
+            console.log(this.$el.html());
+            //  var cView = new clientsView();
+             // cView.render();
+             // this.$el.append(cView.$el);
+        },
 
-              var cView = new clientsView({});
+        dataReady: function(){
 
-
-
-//            this.$el.html();
+            this.render();
+            this.trigger("renderComplete");
 
         },
 
         serverRender: function(cB){
-
 
             //cB(this.$el.html());
             //callBack("lskdjf");
 
 //            if(true){
                 this.render();
-            cB(this.$el);
+                cB(this.$el);
 //            }
-
 
         },
 

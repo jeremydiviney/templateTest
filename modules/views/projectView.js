@@ -1,13 +1,5 @@
-define(['text!templates/projectsView.txt'],function (template) {
+define(['text!templates/projectsView.txt','collections/projectsCollection'],function (template,projectsColllection) {
 
-
-    var projectModel = Backbone.Model.extend({
-
-        defaults: {
-
-        }
-
-    });
 
     // View
 
@@ -18,11 +10,20 @@ define(['text!templates/projectsView.txt'],function (template) {
         },
 
         initialize: function () {
+            var that = this;
+            this.setElement($("<table/>"));
+            this.collection = new projectsColllection();
 
+            this.listenTo(this.collection,'sync',this.dataReady);
+
+            this.collection.fetch({
+                success:function(collection,response,options){console.log(response);},
+                error: function(collection,response,options){console.log(response)}
+            });
         },
 
         render: function(){
-
+            this.$el.html(_.template(template,{models:this.collection.models}));
         }
 
     });

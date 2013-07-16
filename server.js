@@ -90,7 +90,7 @@ app.get('/firms', function(req, res) {
         //html.append($("<h1>test passes</h1>"));
 
         //html.append("<h3>second test passes</h3>");
-        res.send(html.html())
+        res.send(html.outerHTML())
             res.end();
         });
 
@@ -100,7 +100,7 @@ app.get('/firms', function(req, res) {
 
 });
 
-
+var numFirms = 10;
 var numClients = 50;
 var numProjects = 5;
 var numEntries = 20;
@@ -118,6 +118,18 @@ var numTimers = .4;
 //    });
 //
 //});
+
+app.get('/data/firms', function(req, res) {
+
+    var results = data.generateFirms({
+        firm: req.query.firm,
+        firms: numFirms,
+        asObj: req.query.obj
+    });
+
+    res.json(results);
+
+});
 
 
 
@@ -175,3 +187,10 @@ app.get('*', function(req, res) {
 
 app.listen(port);
 console.log('Listening on Port ' + port + '.');
+
+
+$.fn.outerHTML = function(s) {
+    return s
+        ? this.before(s).remove()
+        : $("<p>").append(this.eq(0).clone()).html();
+};

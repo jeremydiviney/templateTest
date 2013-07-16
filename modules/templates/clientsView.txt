@@ -1,6 +1,14 @@
-CLIENT
+<table>
+<tr>
+    <th>
+        CLIENTS
+    </th>
+</tr>
 
-
-
-
- VIEW
+<%for(var x=0;x<models.length;x++){%>
+<tr>
+<td><%=models[x].get("id")%></td>
+<td><%=models[x].get("name")%></td>
+</tr>
+<%}%>
+ </table>

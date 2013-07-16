@@ -1,8 +1,8 @@
 <table>
 <tr>
-    <td>
-        FIRMS
-    </td>
+    <th>
+        PROJECTS
+    </th>
 </tr>
 
 <%for(var x=0;x<models.length;x++){%>

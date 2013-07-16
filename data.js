@@ -1,3 +1,35 @@
+exports.generateFirms = function(options) {
+
+    //options.client = single record to return.
+    //options.clients = number of records to return.
+    //options.asObj = return as object instead of array.
+
+    options = options || {};
+
+    var i, firms = [];
+
+    for (i=0; i<options.firms; i++) {
+
+        if (!options.firm || options.firm == i) {
+
+            firms.push({
+                id: 'F' + i,
+                name: 'Firm Number ' + i
+            });
+
+        }
+
+    }
+
+    if (options.asObj) {
+        firms = exports.asObj(firms, 'firms');
+    }
+
+    return firms;
+
+};
+
+
 exports.generateClients = function(options) {
 
     //options.client = single record to return.
