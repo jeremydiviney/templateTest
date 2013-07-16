@@ -9,6 +9,7 @@ define(['text!templates/firmsView.txt','views/clientsView'],function (template,c
 
         },
 
+
         initialize: function () {
               var that = this;
               this.setElement($("<table/>"));
