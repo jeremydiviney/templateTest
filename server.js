@@ -1,20 +1,27 @@
+
+
+//var cluster = require('cluster');
+//var http = require('http');
+//var numCPUs = require('os').cpus().length;
+
 var express = require('express');
 var consolidate = require('consolidate');
-var Handlebars = require('handlebars');
+//var Handlebars = require('handlebars');
 var request = require('request');
 var fs = require('fs');
 var requirejs = require('requirejs');
 var _ =  global._ = require('lodash');
 
-var jsdom = require('jsdom').jsdom
-
 var $ = global.jQuery = global.$ = require('jquery').create();
+//var $ = global.$ = require('cheerio');
+
+
 var jQuery = $;
 
 global.Backbone = require('backbone');
 
-var app = express();
 
+var app = express();
 
 var port = process.env.PORT || 1222;
 
@@ -40,6 +47,20 @@ app.configure(function(){
     app.use(express.bodyParser());
     app.use(express.cookieParser());
 });
+
+
+//
+//if (cluster.isMaster) {
+//    // Fork workers.
+//    for (var i = 0; i < numCPUs; i++) {
+//        cluster.fork();
+//    }
+//
+//    cluster.on('exit', function(worker, code, signal) {
+//        console.log('worker ' + worker.process.pid + ' died');
+//    });
+//}else{
+
 
 // Register Handlebar Partial Templates
 //var partials = __dirname + '/public/templates/partials/';
@@ -80,6 +101,8 @@ app.get('/*', function(req, res,next) {
 
 app.get('/firms', function(req, res) {
 
+
+
       var view = requirejs('views/firmsView');
 //    //res.json(Backbone);
      var v = new view({id:"firmView1"});
@@ -106,6 +129,9 @@ app.get('/clients', function(req, res) {
 
 app.get('/projects', function(req, res) {
 
+    var $ = global.$;
+    global.Backbone = require('backbone');
+
     var view = requirejs('views/projectsView');
 //    //res.json(Backbone);
     var v = new view({id:"projectsView1"});
@@ -117,9 +143,9 @@ app.get('/projects', function(req, res) {
     });
 });
 
-var numFirms = 8;
-var numClients = 10;
-var numProjects = 2500;
+var numFirms = 12;
+var numClients = 20;
+var numProjects = 100;
 var numEntries = 20;
 var numTimers = .4;
 
@@ -136,7 +162,6 @@ var numTimers = .4;
 //
 //});
 
-
 app.get('/data/firms', function(req, res) {
 
     var results = data.generateFirms({
@@ -148,7 +173,6 @@ app.get('/data/firms', function(req, res) {
     res.json(results);
 
 });
-
 
 
 app.get('/data/clients', function(req, res) {
@@ -218,3 +242,7 @@ Backbone.View.prototype.setElement = function(element,delegate){
     this.setElement_orig(element,delegate);
     this.trigger("elementChange",{"oldEl":curElement});
 };
+
+//console.log = function(){};
+
+//}

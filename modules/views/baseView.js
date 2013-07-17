@@ -72,7 +72,7 @@ define([],function () {
         removeSubView: function(viewId){
 
             if(this.childViews[viewId]){
-                this.childViews[viewId].remove();
+                //this.childViews[viewId].remove();
                 this.childViews[viewId] = null
             }
 

@@ -21,13 +21,12 @@ define(['text!templates/projectsView.txt','views/baseView','collections/projects
 
             this.compiledTemplate =  _.template(template);
 
-
         },
 
         render: function(){
 
 
-            var el =   $(this.compiledTemplate({models:this.collection.models}));
+            var el =  $(this.compiledTemplate({models:this.collection.models}));
             this.setElement(el);
 
 
