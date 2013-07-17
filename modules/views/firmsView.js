@@ -1,14 +1,13 @@
-define(['text!templates/firmsView.txt','views/clientsView'],function (template,clientsView) {
+define(['text!templates/firmsView.txt','views/baseView','views/clientsView'],function (template,baseView,clientsView) {
 
     // View
     var firmsCollection = require('collections/firmsCollection');
 
-    var view = Backbone.View.extend({
+    return baseView.extend({
 
         events: {
 
         },
-
 
         initialize: function () {
               var that = this;
@@ -16,53 +15,22 @@ define(['text!templates/firmsView.txt','views/clientsView'],function (template,c
               this.collection = new firmsCollection();
 
               this.listenTo(this.collection,'sync',this.dataReady);
+              this.collection.fetch();
 
-              this.collection.fetch({
-                  success:function(collection,response,options){console.log(response);},
-                  error: function(collection,response,options){console.log(response)}
-              });
+              this.compiledTemplate =  _.template(template);
 
         },
-
 
         render: function(){
 //            //require(['views/clientsView'],function(){});
-            this.setElement($(_.template(template,{models:this.collection.models})));
-            console.log(this.$el.html());
-            //  var cView = new clientsView();
-             // cView.render();
+            this.setElement($(this.compiledTemplate({models:this.collection.models})));
+            //console.log(this.$el.html());
+            var cView = this.addSubView(clientsView,"clientView1",{});
+            cView.render();
+            this.$el.append(cView.$el);
              // this.$el.append(cView.$el);
-        },
-
-        dataReady: function(){
-
-            this.render();
-            this.trigger("renderComplete");
-
-        },
-
-        serverRender: function(cB){
-
-            //cB(this.$el.html());
-            //callBack("lskdjf");
-
-//            if(true){
-                this.render();
-                cB(this.$el);
-//            }
-
-        },
-
-        loadSubView: function(requireView){
-
-            //document.write(requireView);
-            //alert("lksdjf");
-            require([requireView]);
-
         }
 
     });
-
-    return view;
 
 });

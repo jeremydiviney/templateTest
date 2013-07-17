@@ -82,27 +82,44 @@ app.get('/firms', function(req, res) {
 
       var view = requirejs('views/firmsView');
 //    //res.json(Backbone);
-     var v = new view();
+     var v = new view({id:"firmView1"});
      //v.render();
 
     v.serverRender(function(html){
-
-        //html.append($("<h1>test passes</h1>"));
-
-        //html.append("<h3>second test passes</h3>");
         res.send(html.outerHTML())
             res.end();
         });
-
-    res.end();
-
-
-
 });
 
-var numFirms = 10;
-var numClients = 50;
-var numProjects = 5;
+app.get('/clients', function(req, res) {
+
+    var view = requirejs('views/clientsView');
+//    //res.json(Backbone);
+    var v = new view({id:"clientsView1"});
+    //v.render();
+
+    v.serverRender(function(html){
+        res.send(html.outerHTML())
+        res.end();
+    });
+});
+
+app.get('/projects', function(req, res) {
+
+    var view = requirejs('views/projectsView');
+//    //res.json(Backbone);
+    var v = new view({id:"projectsView1"});
+    //v.render();
+
+    v.serverRender(function(html){
+        res.send(html.outerHTML())
+        res.end();
+    });
+});
+
+var numFirms = 8;
+var numClients = 10;
+var numProjects = 2500;
 var numEntries = 20;
 var numTimers = .4;
 
@@ -151,7 +168,6 @@ app.get('/data/projects', function(req, res) {
     res.json(data.generateProjects({
         client: req.query.client,
         project: req.query.project,
-        clients: numClients,
         projects: numProjects,
         asObj: req.query.obj
     }));
@@ -194,4 +210,11 @@ $.fn.outerHTML = function(s) {
     return s
         ? this.before(s).remove()
         : $("<p>").append(this.eq(0).clone()).html();
+};
+
+Backbone.View.prototype.setElement_orig = Backbone.View.prototype.setElement;
+Backbone.View.prototype.setElement = function(element,delegate){
+    var curElement  = this.$el;
+    this.setElement_orig(element,delegate);
+    this.trigger("elementChange",{"oldEl":curElement});
 };

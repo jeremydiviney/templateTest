@@ -1,35 +1,36 @@
-define(['text!templates/clientsView.txt','views/projectView','collections/clientsCollection'],function (template,projectsView,clientsCollection) {
+define(['text!templates/clientsView.txt','views/baseView','views/projectsView','collections/clientsCollection'],function (template,baseView,projectsView,clientsCollection) {
 
     // View
 
-    var view = Backbone.View.extend({
+    return baseView.extend({
 
         events: {
 
         },
 
         initialize: function () {
+
             var that = this;
             this.setElement($("<table/>"));
             this.collection = new clientsCollection();
 
             this.listenTo(this.collection,'sync',this.dataReady);
+            this.collection.fetch();
 
-            this.collection.fetch({
-                success:function(collection,response,options){console.log(response);},
-                error: function(collection,response,options){console.log(response)}
-            });
+            this.compiledTemplate =  _.template(template);
+
         },
 
         render: function(){
-            this.$el.html(_.template(template,{models:this.collection.models}));
-            var pView = new projectsView();
+            this.setElement($(this.compiledTemplate({models:this.collection.models})));
+
+            var pView = this.addSubView(projectsView,"projectView1",{});
+            //var pView = new projectsView();
             pView.render();
             this.$el.append(pView.$el);
         }
 
     });
 
-    return view;
 
 });

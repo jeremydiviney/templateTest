@@ -10,14 +10,14 @@ exports.generateFirms = function(options) {
 
     for (i=0; i<options.firms; i++) {
 
-        if (!options.firm || options.firm == i) {
 
-            firms.push({
-                id: 'F' + i,
-                name: 'Firm Number ' + i
-            });
 
-        }
+        firms.push({
+            id: 'F' + i,
+            name: 'Firm Number ' + i
+        });
+
+
 
     }
 
@@ -42,14 +42,11 @@ exports.generateClients = function(options) {
 
     for (i=0; i<options.clients; i++) {
 
-        if (!options.client || options.client == i) {
+        clients.push({
+            id: 'c' + i,
+            name: 'Client Number ' + i
+        });
 
-            clients.push({
-                id: 'c' + i,
-                name: 'Client Number ' + i
-            });
-
-        }
 
     }
 
@@ -71,31 +68,17 @@ exports.generateProjects = function(options) {
 
     options = options || {};
 
-    var i, j, projects = [];
+    var p, j, projects = [];
 
-    for (j=0; j<options.clients; j++) {
+    for (p=0;p<options.projects;p++) {
 
-        if (!options.client || options.client == j) {
+        projects.push({
+            id: 'p'  + p,
+            name: 'Project Number ' + p,
+            client: 'c' + options.client
+        });
 
-            for (i=0; i<options.projects; i++) {
 
-                if (options.project) {
-                    options.project = parseInt(options.project, 10);
-                }
-
-                if (!options.project || options.project == ((j*options.projects)+i)) {
-
-                    projects.push({
-                        id: 'p' + ((j*options.projects)+i),
-                        name: 'Project Number ' + ((j*options.projects)+i),
-                        client: 'c' + j
-                    });
-
-                }
-
-            }
-
-        }
     }
 
     if (options.asObj) {
