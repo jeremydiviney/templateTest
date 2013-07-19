@@ -9,6 +9,9 @@
 <tr>
 <td><%=models[x].get("id")%></td>
 <td><%=models[x].get("name")%></td>
+<TD>
+</td>
 </tr>
 <%}%>
  </table>
+
