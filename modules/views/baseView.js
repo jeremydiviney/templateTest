@@ -62,14 +62,14 @@ define([],function () {
         attachViews: function(){
 
             var that = this;
-            console.log('@@@@' + this.id);
-            console.log('-------------------------------------->' + _.keys(this.childViews) );
-            console.log(this.$("[data-viewid]").html());
+            //console.log('@@@@' + this.id);
+            //console.log('-------------------------------------->' + _.keys(this.childViews) );
+            //console.log(this.$("[data-viewid]").html());
             var tmp = this.$el.find("[data-viewid]").each(function(){
-                console.log('----------------->' + $(this).outerHTML());
-                console.log('----------------->' + $(this).html());
-                console.log('----------------->' + $(this).data('viewid'));
-                console.log('----------------->' + $(this).attr('data-viewid'));
+                //console.log('----------------->' + $(this).outerHTML());
+                //console.log('----------------->' + $(this).html());
+                //console.log('----------------->' + $(this).data('viewid'));
+                //console.log('----------------->' + $(this).attr('data-viewid'));
                 //console.log('***********' + that.childViews['topView'].$el.html());
                 //$(this).replaceWith(that.childViews[$(this).data('viewid')].$el);
 

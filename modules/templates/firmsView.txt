@@ -7,13 +7,8 @@
 
 <%for(var x=0;x<models.length;x++){%>
 <tr>
-<td><%=models[x].get("id")%></td>
-<td><%=models[x].get("name")%></td>
-</tr>
-<tr>
-    <td colspan=3>
-        <%=LV('views/clientsView','firm' + models[x].get("id") + '_ClientsView',{},that)%>
-    </td>
+    <td><%=models[x].get("id")%></td>
+    <td><%=models[x].get("name")%></td>
 </tr>
 <%}%>
  </table>
