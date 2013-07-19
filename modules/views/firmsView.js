@@ -15,7 +15,12 @@ define(['text!templates/firmsView.txt','views/baseView','views/clientsView'],fun
               this.setElement($("<table/>"));
               this.collection = new firmsCollection();
 
-              this.listenTo(this.collection,'sync',this.dataReady);
+              this.listenTo(this.collection,'sync',function(){
+                this.templateData = {models:this.collection.models};
+                console.log(JSON.stringify(this.templateData));
+                this.dataReady();
+              });
+
               this.collection.fetch();
               //console.log(template);
               this.compiledTemplate =  _.template(template);

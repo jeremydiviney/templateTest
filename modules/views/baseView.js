@@ -2,11 +2,10 @@ define([],function () {
 
     return Backbone.View.extend({
 
-
         initialize:function(){
 
             var that = this;
-            this.setElement($("<div/>"));
+            //this.setElement($("<div/>"));
 
             if(this.options.template){
                 this.compiledTemplate =  _.template(this.options.template);
@@ -17,16 +16,27 @@ define([],function () {
         },
 
         render: function(){
-            if(this.options.template){
-                this.setElement($(this.compiledTemplate({models:[],data:this.options.data,LV:this.loadSubView,that:this})));
+
+        },
+
+        renderHTML: function(){
+            console.log("HTML Render: " + this.id);
+            this.templateData = {data:(this.templateData || null )};
+            //console.log("---->" );
+            //console.log(this.templateData);
+            this.templateData = _.extend(this.templateData,{LV:this.loadSubView,that:this});
+
+            if(this.compiledTemplate){
+                this._serverHTML = this.compiledTemplate(this.templateData);
             }
+
         },
 
         dataReady: function(){
 
             //console.log("dataReady"  + this.id);
             //console.log(JSON.stringify(this.collection.models))
-            this.render();
+            this.renderHTML();
             this._renderComplete = true;
             this.renderTreeCheck();
 
@@ -61,23 +71,22 @@ define([],function () {
 
         attachViews: function(){
 
-            var that = this;
-            //console.log('@@@@' + this.id);
-            //console.log('-------------------------------------->' + _.keys(this.childViews) );
-            //console.log(this.$("[data-viewid]").html());
-            var tmp = this.$el.find("[data-viewid]").each(function(){
-                //console.log('----------------->' + $(this).outerHTML());
-                //console.log('----------------->' + $(this).html());
-                //console.log('----------------->' + $(this).data('viewid'));
-                //console.log('----------------->' + $(this).attr('data-viewid'));
-                //console.log('***********' + that.childViews['topView'].$el.html());
-                //$(this).replaceWith(that.childViews[$(this).data('viewid')].$el);
+            this._serverHTML =  this._serverHTML.replace(/<VIEWINSERT (.*)?>/gi,this.getChildViewHTML.bind(this));
 
-            });
+        },
+
+        getChildViewHTML: function(ignore,viewId){
+
+             console.log('---->' + ignore,viewId);
+            //if(!this.childViews[viewId])console.log("not here!!!!");
+            //else
+            return this.childViews[viewId]._serverHTML;
+            //return "SKIP";
 
         },
 
         addSubView: function(viewConstructor,viewId,options){
+
             var tmpView;
             var that = this;
             this.childViews =  this.childViews || {};
@@ -98,10 +107,10 @@ define([],function () {
                     this.renderTreeCheck();
                 });
 
-                this.listenTo(this.childViews[options.id],"elementChange",function(stuff){
-                    //console.log("replacing... " + stuff.oldEl.html());
-                    stuff.oldEl.replaceWith(this.childViews[options.id].$el);
-                });
+//                this.listenTo(this.childViews[options.id],"elementChange",function(stuff){
+//                    //console.log("replacing... " + stuff.oldEl.html());
+//                    stuff.oldEl.replaceWith(this.childViews[options.id].$el);
+//                });
 
             }
 
@@ -112,8 +121,8 @@ define([],function () {
         removeSubView: function(viewId){
 
             if(this.childViews[viewId]){
-                //this.childViews[viewId].remove();
-                this.childViews[viewId] = null
+                this.childViews[viewId].remove();
+                this.childViews[viewId] = null;
             }
 
         },
@@ -132,8 +141,8 @@ define([],function () {
             //alert("lksdjf");
             var viewProto = require(requireView);
             var view = that.addSubView(viewProto,viewId,options);
-            view.render();
-            return '<div data-viewId=' + view.id + '></div>';
+            //view.renderHTML();
+            return '<VIEWINSERT ' + view.id + '>';
 
         },
 
@@ -142,11 +151,13 @@ define([],function () {
             var that = this;
 
             this.listenTo(this,"renderComplete",function(){
-                cB(that.$el);
+                cB(this._serverHTML);
             });
 
-            this.render();
-            //this.dataReady();
+            if(this._renderComplete){
+                this.stopListening(this,"renderComplete");
+                cB(this._serverHTML);
+            }
 
         }
 

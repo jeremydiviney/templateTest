@@ -5,10 +5,17 @@
     </td>
 </tr>
 
-<%for(var x=0;x<models.length;x++){%>
+<%for(var x=0;x<data.models.length;x++){%>
 <tr>
-    <td><%=models[x].get("id")%></td>
-    <td><%=models[x].get("name")%></td>
+    <td><%=data.models[x].get("id")%></td>
+    <td><%=data.models[x].get("name")%></td>
+</tr>
+<tr>
+    <td>
+
+        <%=LV('views/clientsView','firms' + data.models[x].get("id")  + '_clientsView',{},that)%>
+
+    </td>
 </tr>
 <%}%>
  </table>

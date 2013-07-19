@@ -59,7 +59,7 @@ app.get('/page', function(req, res) {
     //v.render();
 
     v.serverRender(function(html){
-        res.send(html.outerHTML())
+        res.send(html)
         res.end();
     });
 
@@ -74,7 +74,7 @@ app.get('/firms', function(req, res) {
      //v.render();
 
     v.serverRender(function(html){
-        res.send(html.outerHTML())
+        res.send(html)
             res.end();
         });
 });
@@ -87,7 +87,7 @@ app.get('/clients', function(req, res) {
     //v.render();
 
     v.serverRender(function(html){
-        res.send(html.outerHTML())
+        res.send(html)
         res.end();
     });
 });
@@ -100,7 +100,7 @@ app.get('/projects', function(req, res) {
     //v.render();
 
     v.serverRender(function(html){
-        res.send(html.outerHTML())
+        res.send(html)
         res.end();
     });
 });
@@ -182,15 +182,3 @@ app.listen(port);
 console.log('Listening on Port ' + port + '.');
 
 
-$.fn.outerHTML = function(s) {
-    return s
-        ? this.before(s).remove()
-        : $("<p>").append(this.eq(0).clone()).html();
-};
-
-Backbone.View.prototype.setElement_orig = Backbone.View.prototype.setElement;
-Backbone.View.prototype.setElement = function(element,delegate){
-    var curElement  = this.$el;
-    this.setElement_orig(element,delegate);
-    this.trigger("elementChange",{"oldEl":curElement});
-};
