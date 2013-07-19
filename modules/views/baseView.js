@@ -38,34 +38,40 @@ define([],function () {
             //console.log(JSON.stringify(this.collection.models))
             this.renderHTML();
             this._renderComplete = true;
-            this.renderTreeCheck();
+            this.ServerRenderCheck();
 
         },
 
-        renderTreeCheck: function(){
+        ServerRenderCheck: function(){
 
-            var renderComplete = false;
-            //console.log("renderTreeCheck" + this.id);
-            if(this._renderComplete === true){
-                renderComplete = true;
-                //console.log("render checking subView ... count:" + _.size(this.childViews));
-                for(var tmpId in this.childViews){
-                    //console.log("render checking..." + this.childViews[tmpId] + " : " + this.childViews[tmpId]._renderComplete);
-                    if(!this.childViews[tmpId]._renderComplete){
-                        renderComplete = false;
-                    }
-
-                }
-
-            }
-
-            if(renderComplete){
+            if(this.renderTreeCheck()){
 
                 //console.log("renderComplete" + this.id);
                 this.attachViews();
                 this.trigger("renderComplete");
 
             }
+
+        },
+
+        renderTreeCheck: function(){
+
+            var renderComplete = false;
+            console.log("renderTreeCheck" + this.id);
+            if(this._renderComplete){
+                //console.log("render checking subView ... count:" + _.size(this.childViews));
+                for(var tmpId in this.childViews){
+                    //console.log("render checking..." + this.childViews[tmpId] + " : " + this.childViews[tmpId]._renderComplete);
+                    if(!(this.childViews[tmpId].renderTreeCheck())){
+                        return false;
+                    }
+                }
+
+            }else{
+                return false;
+            }
+
+            return true;
 
         },
 
@@ -104,7 +110,7 @@ define([],function () {
                 this.childViews[options.id] = tmpView;
 
                 this.listenTo(this.childViews[options.id],"renderComplete",function(){
-                    this.renderTreeCheck();
+                    this.ServerRenderCheck();
                 });
 
 //                this.listenTo(this.childViews[options.id],"elementChange",function(stuff){
@@ -155,8 +161,7 @@ define([],function () {
             });
 
             if(this._renderComplete){
-                this.stopListening(this,"renderComplete");
-                cB(this._serverHTML);
+                this.dataReady();
             }
 
         }

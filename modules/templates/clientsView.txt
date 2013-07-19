@@ -11,7 +11,7 @@
 <td><%=data.models[x].get("name")%></td>
 </tr>
 <tr>
-    <td>
+    <td colspan=2>
 
         <%=LV('views/projectsView','_proj' + data.models[x].get("id"),{},that)%>
 

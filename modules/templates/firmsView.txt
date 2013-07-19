@@ -1,8 +1,8 @@
 <table>
 <tr>
-    <td>
+    <th>
         FIRMS
-    </td>
+    </th>
 </tr>
 
 <%for(var x=0;x<data.models.length;x++){%>
@@ -11,7 +11,7 @@
     <td><%=data.models[x].get("name")%></td>
 </tr>
 <tr>
-    <td>
+    <td colspan=2>
 
         <%=LV('views/clientsView','firms' + data.models[x].get("id")  + '_clientsView',{},that)%>
 

@@ -24,6 +24,9 @@ requirejs.config({
     nodeRequire: require
 });
 
+
+
+
 console.log(__dirname);
 
 var data = require('./data.js');
@@ -105,9 +108,9 @@ app.get('/projects', function(req, res) {
     });
 });
 
-var numFirms = 2;
+var numFirms = 1;
 var numClients = 2;
-var numProjects = 5;
+var numProjects = 10;
 var numEntries = 20;
 var numTimers = .4;
 
@@ -180,5 +183,7 @@ app.get('*', function(req, res) {
 
 app.listen(port);
 console.log('Listening on Port ' + port + '.');
+
+console.log = function(){};
 
 

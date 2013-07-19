@@ -1,7 +1,25 @@
 <html>
 
 <style>
-    table {border: solid 1px black;}
+    table{
+        border: solid 3px black;
+        width: 50%;
+        font-size:15pt;
+
+    }
+
+    table table{
+         border: solid 2px black;
+         width: 75%;
+         font-size:13pt;
+    }
+
+      table table table{
+             border: solid 1px black;
+             width: 85%;
+             font-size:11pt;
+        }
+
 </style>
 
 <div>
