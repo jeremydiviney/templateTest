@@ -41,35 +41,6 @@ app.configure(function(){
     app.use(express.cookieParser());
 });
 
-// Register Handlebar Partial Templates
-//var partials = __dirname + '/public/templates/partials/';
-//fs.readdirSync(partials).forEach(function(file) {
-//    var source = fs.readFileSync(partials + file, 'utf8');
-//    var partial = /(.+)\.html/.exec(file).pop();
-//    Handlebars.registerPartial(partial, source);
-//});
-//
-//Handlebars.registerHelper('multiply', function(a, b) {
-//    return (a * b).toFixed(2);
-//});
-//
-//Handlebars.registerHelper('2digit', function(a) {
-//    return a.toFixed(2);
-//});
-
-
-//Handlebars.registerHelper('lv', function(module) {
-//
-//    var view = requirejs('public/' + module);
-//    var instance = new view;
-//
-//    var template = Handlebars.compile(instance.template);
-//    var data = instance.data();
-//
-//    return new Handlebars.SafeString(template(data));
-//
-//});
-
 
 app.get('/*', function(req, res,next) {
     //res.write("aadxxxxxxxxxvcvvvvvvvdbbbbbaaa");
@@ -77,6 +48,23 @@ app.get('/*', function(req, res,next) {
     res.contentType("text/html");
     next();
 });
+
+
+app.get('/page', function(req, res) {
+
+    var view = requirejs('views/baseView');
+    var template = requirejs('text!templates/pageView.txt');
+//    //res.json(Backbone);
+    var v = new view({id:"pageView1",template:template});
+    //v.render();
+
+    v.serverRender(function(html){
+        res.send(html.outerHTML())
+        res.end();
+    });
+
+});
+
 
 app.get('/firms', function(req, res) {
 
@@ -117,24 +105,12 @@ app.get('/projects', function(req, res) {
     });
 });
 
-var numFirms = 8;
-var numClients = 10;
-var numProjects = 2500;
+var numFirms = 2;
+var numClients = 2;
+var numProjects = 5;
 var numEntries = 20;
 var numTimers = .4;
 
-//app.get('/gettest', function(req, res) {
-//
-//    preprocessor.start([
-//        ["clients", "http://localhost:" + port + "/data/clients"],
-//        ["projects", "http://localhost:" + port + "/data/projects"],
-//        ["entries", "http://localhost:" + port + "/data/entries"],
-//        ["timers", "http://localhost:" + port + "/data/timers"]
-//    ], function(data) {
-//        res.json(data);
-//    });
-//
-//});
 
 
 app.get('/data/firms', function(req, res) {

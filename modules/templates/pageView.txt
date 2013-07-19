@@ -1,0 +1,11 @@
+<html>
+
+<style>
+    table {border: solid 1px black;}
+</style>
+
+<div>
+    <%=LV('views/firmsView','topView',{},that)%>
+</div>
+
+</html>

@@ -24,10 +24,10 @@ define(['text!templates/clientsView.txt','views/baseView','views/projectsView','
         render: function(){
             this.setElement($(this.compiledTemplate({models:this.collection.models})));
 
-            var pView = this.addSubView(projectsView,"projectView1",{});
+            //var pView = this.addSubView(projectsView,"projectView1",{});
             //var pView = new projectsView();
-            pView.render();
-            this.$el.append(pView.$el);
+            //pView.render();
+            //this.$el.append(pView.$el);
         }
 
     });
