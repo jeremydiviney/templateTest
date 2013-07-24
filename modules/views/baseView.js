@@ -2,7 +2,7 @@ define([],function () {
 
     return Backbone.View.extend({
 
-        initialize:function(){
+        initialize: function(){
 
             var that = this;
             //this.setElement($("<div/>"));
@@ -11,9 +11,33 @@ define([],function () {
                 this.compiledTemplate =  _.template(this.options.template);
             }
 
-            this._renderComplete = true;
+            if(this.initializeView){
+                this.initializeView.apply(this, arguments);
+
+            }else{
+                this._renderComplete = true;
+            }
+
+            this.templateData = this.templateData || {};
+
+            if(this.collection){
+                this.listenTo(this.collection,'sync',function(){
+                    console.log('--------------->' + JSON.stringify(this.templateData));
+                    _.extend(this.templateData, {models:this.collection.models});
+                    this.dataReady();
+                });
+            }
+
+            if(this.model){
+                this.listenTo(this.model,'sync',function(){
+                    console.log('--------------->' + JSON.stringify(this.templateData));
+                    _.extend(this.templateData,{model:this.model.attributes});
+                    this.dataReady();
+                });
+            }
 
         },
+
 
         render: function(){
 
@@ -33,7 +57,6 @@ define([],function () {
         },
 
         dataReady: function(){
-
             //console.log("dataReady"  + this.id);
             //console.log(JSON.stringify(this.collection.models))
             this.renderHTML();

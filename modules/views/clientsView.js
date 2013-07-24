@@ -7,17 +7,11 @@ define(['text!templates/clientsView.txt','views/baseView','views/projectsView','
 
         },
 
-        initialize: function () {
+        initializeView: function () {
 
             var that = this;
             this.setElement($("<table/>"));      //////////////////////////
             this.collection = new clientsCollection();
-
-            this.listenTo(this.collection,'sync',function(){
-                this.templateData = {models:this.collection.models};
-                //console.log(JSON.stringify(this.templateData));
-                this.dataReady();
-            });
 
             this.collection.fetch();
 

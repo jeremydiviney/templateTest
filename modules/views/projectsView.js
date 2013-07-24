@@ -9,18 +9,14 @@ define(['text!templates/projectsView.txt','views/baseView','collections/projects
 
         },
 
-        initialize: function () {
+        initializeView: function () {
             var that = this;
             this.setElement($("<table/>"));
             this.collection = new projectsColllection();
 
-            this.listenTo(this.collection,'sync',function(){
-                this.templateData = {models:this.collection.models};
-                this.dataReady();
-            });
-
             this.collection.fetch();
 
+            console.log("compiling template");
             this.compiledTemplate =  _.template(template);
 
         },

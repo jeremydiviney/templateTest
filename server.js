@@ -6,7 +6,7 @@ var fs = require('fs');
 var requirejs = require('requirejs');
 var _ =  global._ = require('lodash');
 
-var jsdom = require('jsdom').jsdom
+//var jsdom = require('jsdom').jsdom
 
 var $ = global.jQuery = global.$ = require('jquery').create();
 var jQuery = $;
@@ -108,9 +108,9 @@ app.get('/projects', function(req, res) {
     });
 });
 
-var numFirms = 1;
-var numClients = 2;
-var numProjects = 10;
+var numFirms = 4;
+var numClients = 6;
+var numProjects = 15;
 var numEntries = 20;
 var numTimers = .4;
 
