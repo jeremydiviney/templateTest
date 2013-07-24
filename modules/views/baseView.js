@@ -20,6 +20,10 @@ define([],function () {
 
             this.templateData = this.templateData || {};
 
+            //---------Keep an eye on the position of these listeners.
+            //At the moment they are actually after the "fetch()" that should be called at the end of the initializeView for each view.
+            //If somehow the sync happens before these listeners are invoked, you would probably never get a return from node, because dataReady would never be called
+
             if(this.collection){
                 this.listenTo(this.collection,'sync',function(){
                     console.log('--------------->' + JSON.stringify(this.templateData));
@@ -59,6 +63,7 @@ define([],function () {
         dataReady: function(){
             //console.log("dataReady"  + this.id);
             //console.log(JSON.stringify(this.collection.models))
+
             this.renderHTML();
             this._renderComplete = true;
             this.ServerRenderCheck();
@@ -100,7 +105,7 @@ define([],function () {
 
         attachViews: function(){
 
-            this._serverHTML =  this._serverHTML.replace(/<VIEWINSERT (.*)?>/gi,this.getChildViewHTML.bind(this));
+            this._serverHTML =  this._serverHTML.replace(/<VIEWINSERT (.*?)>/gi,this.getChildViewHTML.bind(this));
 
         },
 

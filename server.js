@@ -109,8 +109,8 @@ app.get('/projects', function(req, res) {
 });
 
 var numFirms = 4;
-var numClients = 6;
-var numProjects = 15;
+var numClients = 3;
+var numProjects = 12;
 var numEntries = 20;
 var numTimers = .4;
 

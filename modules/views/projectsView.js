@@ -16,15 +16,15 @@ define(['text!templates/projectsView.txt','views/baseView','collections/projects
 
             this.collection.fetch();
 
-            console.log("compiling template");
+            //console.log("compiling template");
             this.compiledTemplate =  _.template(template);
 
         },
 
         render: function(){
 
-            var el =  $(this.compiledTemplate({models:this.collection.models}));
-            this.setElement(el);
+//            var el =  $(this.compiledTemplate({models:this.collection.models}));
+//            this.setElement(el);
 
         }
 

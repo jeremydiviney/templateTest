@@ -23,7 +23,7 @@
 </style>
 
 <div>
-    <%=LV('views/firmsView','topView',{},that)%>
+    <%=LV('views/firmsView',null,{},that)%>
 </div>
 
 </html>

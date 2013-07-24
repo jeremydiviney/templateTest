@@ -24,12 +24,9 @@ define(['text!templates/firmsView.txt','views/baseView','views/clientsView'],fun
 
         render: function(){
 //            //require(['views/clientsView'],function(){});
-            this.setElement($(this.compiledTemplate({models:this.collection.models,LV:this.loadSubView,that:this})));
+            //this.setElement($(this.compiledTemplate({models:this.collection.models,LV:this.loadSubView,that:this})));
             //console.log(this.$el.html());
-            var cView = this.addSubView(clientsView,"clientView1",{});
-            cView.render();
-            this.$el.append(cView.$el);
-             // this.$el.append(cView.$el);
+
         }
 
     });
